@@ -14,7 +14,18 @@ app.use(cors());
 app.use(express.json());//must use this to pass to backend
 app.use(bodyParser.urlencoded({extended: true}));//you just have to put this
 
-app.post("/api/insert", (req,res)=>{
+app.get("/", (req,res)=>{
+    res.send("access http://localhost:3001/api/get to see the table");
+});
+app.get("/api/get", (req, res)=>{
+    const sqlSelect = 
+    "SELECT * FROM movie_reviews";
+    db.query(sqlSelect, (err,result)=>{
+        res.send(result);//res.send displays the results on the webpage
+    });
+});
+
+app.post("/api/insert", (req,res)=>{ //this url is used in the front end
     //we use axios and bodyparser to get the variables from the front end. 
     const movieName = req.body.movieName;
     const movieReview = req.body.movieReview;
