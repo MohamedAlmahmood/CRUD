@@ -4,18 +4,13 @@ const mysql = require('mysql')
 
 const db = mysql.createPool({
     host: 'localhost',
-    user: 'root',
-    password: '12334556',
+    user: 'admin',
+    password: 'password',
     database: 'CRUDDataBase'
 })
 
 
-app.get("/", (req, res)=>{
-    const sqlInsert = "INSERT INTO movie_reviews (movie_name, movie_reviews) VALUES ('inception', 'good movie');"
-    db.query(sqlInsert, (err, result)=>{
-        res.send("sql inserted"); //send the response to the front end
-    })  
-});
+app.get("/", (req, res)=>{});
 
 /*
 When we are at the home url "http://localhost:3001/" we want the page to res 'respond' with hello. 
