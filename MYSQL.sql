@@ -1,0 +1,1 @@
+SELECT * FROM CRUDDataBase.movie_reviews;

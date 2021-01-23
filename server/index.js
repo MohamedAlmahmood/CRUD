@@ -1,8 +1,20 @@
 const express = require('express')
 const app = express()
+const mysql = require('mysql')
+
+const db = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '12334556',
+    database: 'CRUDDataBase'
+})
+
 
 app.get("/", (req, res)=>{
-    res.send("devStart wokring"); //send the response to the front end
+    const sqlInsert = "INSERT INTO movie_reviews (movie_name, movie_reviews) VALUES ('inception', 'good movie');"
+    db.query(sqlInsert, (err, result)=>{
+        res.send("sql inserted"); //send the response to the front end
+    })  
 });
 
 /*
