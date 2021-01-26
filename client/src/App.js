@@ -4,26 +4,33 @@ import Axios from 'axios'; //allows us to pass variables from front end to back 
 
 function App() {
   const [movieName, setMovieName]=useState("");//State makes the values dynamic and changeable by the user.
-  const [review, setReview]=useState("");//we can use setReview(new value) to change the review.
+  const [review, setReview]=useState("");//we can use setReview(new value) to change the review. In this case the state is a text
+  const [movieList, setmovieList]=useState([]);//The use state is going to be an array.
+
 
   useEffect(
+    //used as a side effect of the app being rendered. 
+    //useEffect will show the result after the app is rendered.
+    //so this code will be executed later because we are using useEffect
+    //get the information from api/get and set it equal to setmovieList variable.
     ()=>{ 
      Axios.get("http://localhost:3001/api/get").then((response)=>{
-       console.log(response.data);//show me all the data that are in the url 'backend'
+       setmovieList(response.data)//array semovieList = response.data array
      }) 
     }, 
     [])
 
+
   const submitReview = ()=>{ //this method is for the submit review button
-    Axios.post("http://localhost:3001/api/insert", {//Axios.post is used to pass variables from front end to back end
+    Axios.post("http://localhost:3001/api/insert", {//pass the information from to this backend url
       //pass to localhot:3001/api/insert which is the backend url
-      movieName: movieName, //movieName is passed to backend as movieName
-      movieReview: review, //review is passed to backend as movieReview
-    }).then(()=>{
-      alert('successful insert'); 
-      console.log("movie submit button working")
-    });
+      movieName: movieName, //movieName is passed from input to backend as movieName
+      movieReview: review, //review is passed from input to backend as movieReview
+    })
+    /* add new value to the movieList once the submitReview button is pressed*/
+    setmovieList([...movieList, {movie_name: movieName, movie_reviews: review},])
   };
+
   return (
     <div className="App">
 
@@ -48,6 +55,11 @@ function App() {
           setReview(e.target.value);
         }}></input>
         <button onClick={submitReview}>submit</button>
+        
+        {movieList.map((val)=>{//map through the list and grab each value.  
+          return <p>movie name: {val.movie_name} | movie review: {val.movie_reviews}</p>
+        })}
+
       </div>
       
     </div>

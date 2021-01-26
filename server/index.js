@@ -14,10 +14,14 @@ app.use(cors());
 app.use(express.json());//must use this to pass to backend
 app.use(bodyParser.urlencoded({extended: true}));//you just have to put this
 
-app.get("/", (req,res)=>{
+app.get("/", (req,res)=>{ //when we are at this backend url show me this:
     res.send("access http://localhost:3001/api/get to see the table");
 });
-app.get("/api/get", (req, res)=>{
+
+/*This method will get all the information from the database using SQL query
+    It first posts the list in the backend url http://localhost:3001/api/get
+    Then the front end accesses this url and takes the list from there*/
+app.get("/api/get", (req, res)=>{ //when we are at this backend url do this:
     const sqlSelect = 
     "SELECT * FROM movie_reviews";
     db.query(sqlSelect, (err,result)=>{
