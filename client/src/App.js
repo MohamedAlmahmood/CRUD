@@ -32,7 +32,7 @@ function App() {
   };
 
   const deleteReview = (movie) => {
-    Axios.delete('http://localhost:3001/api/delete/${movie}');
+    Axios.delete(`http://localhost:3001/api/delete/${movie}`)
   };
 
   return (
