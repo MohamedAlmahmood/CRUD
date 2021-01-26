@@ -31,6 +31,10 @@ function App() {
     setmovieList([...movieList, {movie_name: movieName, movie_reviews: review},])
   };
 
+  const deleteReview = (movie) => {
+    Axios.delete('http://localhost:3001/api/delete/${movie}');
+  };
+
   return (
     <div className="App">
 
@@ -55,9 +59,24 @@ function App() {
           setReview(e.target.value);
         }}></input>
         <button onClick={submitReview}>submit</button>
+       
         
         {movieList.map((val)=>{//map through the list and grab each value.  
-          return <p>movie name: {val.movie_name} | movie review: {val.movie_reviews}</p>
+          return ( 
+            <div className="card">
+              <h1>{val.movie_name}</h1>  
+              <p>{val.movie_reviews}</p>
+
+              <button onClick={()=> {
+                deleteReview(val.movie_name)//send the current movie to the deleteReview method which will send it to the backend.
+              }}>Delete</button>
+
+              <input type="text" id="updateInput"></input>
+
+              <button>Update</button>
+            </div>
+          )
+            
         })}
 
       </div>

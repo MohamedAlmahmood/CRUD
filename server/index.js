@@ -43,6 +43,16 @@ app.post("/api/insert", (req,res)=>{ //this url is used in the front end
     });
 });
 
+app.delete("/api/delete/:movieName", (req, res) => {
+    const name = req.params.movieName;
+    console.log(name);
+    const sqlDelete = "DELETE FROM movie_reviews WHERE movie_name = ?";
+    db.query(sqlDelete, name, (err, result)=>{
+        if (err) console.log(err);
+        console.log("app.delete successful")
+    });
+});
+
 
 /*app.get("/", (req, res)=>{});*/
 
