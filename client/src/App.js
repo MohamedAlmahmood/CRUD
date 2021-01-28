@@ -6,6 +6,7 @@ function App() {
   const [movieName, setMovieName]=useState("");//State makes the values dynamic and changeable by the user.
   const [review, setReview]=useState("");//we can use setReview(new value) to change the review. In this case the state is a text
   const [movieList, setmovieList]=useState([]);//The use state is going to be an array.
+  const [newReview, setNewReview]=useState("");
 
 
   useEffect(
@@ -33,6 +34,14 @@ function App() {
 
   const deleteReview = (movie) => {
     Axios.delete(`http://localhost:3001/api/delete/${movie}`)
+  };
+
+  const updateReview= (movie)=>{
+    Axios.put("http://localhost:3001/api/update",{
+      movieName: movie, //movie is passed from front end to backend
+      movieReview: newReview, //newReview is passed from front end to backend
+    })
+    //setNewReview(""); 
   };
 
   return (
@@ -71,9 +80,13 @@ function App() {
                 deleteReview(val.movie_name)//send the current movie to the deleteReview method which will send it to the backend.
               }}>Delete</button>
 
-              <input type="text" id="updateInput"></input>
+              <input type="text" id="updateInput" onChange={(e)=>{
+                setNewReview(e.target.value)
+              }}></input>
 
-              <button>Update</button>
+              <button onClick={()=>{
+                updateReview(val.movie_name)//send the current movie to the update Review method which will send it to the backend.
+                }}>Update</button>
             </div>
           )
             

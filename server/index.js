@@ -53,6 +53,15 @@ app.delete("/api/delete/:movieName", (req, res) => {
     });
 });
 
+app.put("/api/update", (req, res)=>{
+    const name = req.body.movieName;
+    const review = req.body.movieReview;
+    const sqlUpdate = "UPDATE movie_reviews SET movie_reviews=? WHERE movie_name=?";
+    db.query(sqlUpdate, [review, name], (err, result)=>{
+        if(err) console.log(err);
+    });
+}) 
+
 
 /*app.get("/", (req, res)=>{});*/
 
